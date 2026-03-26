@@ -2,6 +2,8 @@ package hexlet.code;
 
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Option;
 
 @Command(
         name = "gendiff",
@@ -10,6 +12,20 @@ import picocli.CommandLine.Command;
         version = "app 0.1.0")
 
 public class App implements Runnable {
+
+    @Parameters(index = "0", description = "path to first file")
+    private String filepath1;
+
+    @Parameters(index = "1", description = "path to second file")
+    private String filepath2;
+
+    @Option(
+            names = {"-f", "--format"},
+            description = "output format [default: stylish]",
+            defaultValue = "stylish")
+
+    private String format;
+
 
     @Override
     public void run() {}
