@@ -44,6 +44,7 @@ public class App implements Runnable {
 //            System.out.println("file1: " + filePath1);
 //            System.out.println("file2: " + filePath2);
 //            System.out.println(("format: " + format));
+            
             System.out.println(Differ.generate(filePath1, filePath2, format));
         } catch (IOException e) {
             System.out.println("error!");
