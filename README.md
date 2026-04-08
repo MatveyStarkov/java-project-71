@@ -1,6 +1,7 @@
 ### Difference Calculator between two files
 ---
 Supported formats:
+
 -yaml
 -json
 
