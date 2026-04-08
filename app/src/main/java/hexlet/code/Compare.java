@@ -1,6 +1,13 @@
 package hexlet.code;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
+import java.util.List;
+import java.util.TreeSet;
+import java.util.Set;
+import java.util.HashMap;
+
+
 
 public class Compare {
     public static List<Map<String, Object>> compare(Map<String, Object> file1, Map<String, Object> file2) {
@@ -12,7 +19,7 @@ public class Compare {
         keys.addAll(file1.keySet());
         keys.addAll(file2.keySet());
 
-        for(String key : keys) {
+        for (String key : keys) {
 
             Object value1 = file1.get(key);
             Object value2 = file2.get(key);
