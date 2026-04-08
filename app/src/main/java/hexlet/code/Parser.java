@@ -11,13 +11,5 @@ public class Parser {
         ObjectMapper mapper = new ObjectMapper();
         Map<String, Object> parsedData = mapper.readValue(content, Map.class);
         return parsedData;
-
-//        switch (dataFormat) {
-//            case "yml":
-//            case "yaml":
-//            case "json":
-//            default:
-//        }
-//        return null;
     }
 }
