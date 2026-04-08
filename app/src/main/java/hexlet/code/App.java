@@ -47,7 +47,7 @@ public class App implements Runnable {
 
             System.out.println(Differ.generate(filePath1, filePath2, format));
         } catch (IOException e) {
-            System.out.println("error!");
+            System.out.println("error: " + e.getMessage());
         }
 
     }

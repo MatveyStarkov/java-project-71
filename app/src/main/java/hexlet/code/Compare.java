@@ -24,7 +24,7 @@ public class Compare {
             Object value1 = file1.get(key);
             Object value2 = file2.get(key);
 
-            HashMap<String, Object> diff = new HashMap<>();
+            Map<String, Object> diff = new HashMap<>();
 
             diff.put("key", key);
 
