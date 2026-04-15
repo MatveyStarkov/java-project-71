@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 
 
-public class Compare {
+public class FileComparator {
     public static List<Map<String, Object>> compare(Map<String, Object> file1, Map<String, Object> file2) {
 
         List<Map<String, Object>> result = new ArrayList<Map<String, Object>>();
