@@ -13,4 +13,9 @@ Supported formats:
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=MatveyStarkov_java-project-71&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=MatveyStarkov_java-project-71)
 
 ### Demo:
+#### JSON:
+
 [![asciicast](https://asciinema.org/a/ESeUZXfipNhSCb8L.svg)](https://asciinema.org/a/ESeUZXfipNhSCb8L)
+
+#### YAML:
+[![asciicast](https://asciinema.org/a/Ic20jtxuPXMfFFsT.svg)](https://asciinema.org/a/Ic20jtxuPXMfFFsT)
