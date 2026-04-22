@@ -13,27 +13,20 @@ public class Differ {
         String content1 = readFile(path1);
         String content2 = readFile(path2);
 
-        Map<String, Object> parsedData1 = Parser.parse(content1, format);
-        Map<String, Object> parsedData2 = Parser.parse(content2, format);
+        String fileExtension1 = getFormat(path1);
+        String fileExtension2 = getFormat(path2);
+
+        Map<String, Object> parsedData1 = Parser.parse(content1, fileExtension1);
+        Map<String, Object> parsedData2 = Parser.parse(content2, fileExtension2);
 
         List<Map<String, Object>> x = FileComparator.compare(parsedData1, parsedData2);
 
-        //System.out.println(x);
-        //return ("\nfile1: \n" + parsedData1 + "\n" + "\nfile2: \n" + parsedData2);
         return Difference.differenceSearch(x);
 
     }
 
     public static String generate(String path1, String path2) throws IOException {
-        String content1 = readFile(path1);
-        String content2 = readFile(path2);
-
-        Map<String, Object> parsedData1 = Parser.parse(content1, "stylish");
-        Map<String, Object> parsedData2 = Parser.parse(content2, "stylish");
-
-        List<Map<String, Object>> x = FileComparator.compare(parsedData1, parsedData2);
-
-        return Difference.differenceSearch(x);
+        return generate(path1, path2, "stylish");
     }
 
 
@@ -43,17 +36,18 @@ public class Differ {
         return whatInside;
     }
 
-//    public static Map<String, Object> parse(String content) throws IOException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map<String, Object> parsedData = mapper.readValue(content, Map.class);
-//        return parsedData;
-//    }
+    public static String getFormat(String path) {
+        if (path.endsWith("json")) {
+            return "json";
+        } else if (path.endsWith("yaml")) {
+            return "yaml";
+        } else if (path.endsWith("yml")) {
+            return "yml";
+        } else {
+            throw new RuntimeException("File '" + path + "' is in an unknown format");
+        }
+    }
 
-
-//    public static String format(Object diff) {
-//
-//        return null;
-//    }
 
 }
 
