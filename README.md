@@ -19,3 +19,7 @@ Supported formats:
 
 #### YAML:
 [![asciicast](https://asciinema.org/a/Ic20jtxuPXMfFFsT.svg)](https://asciinema.org/a/Ic20jtxuPXMfFFsT)
+
+
+#### JSON:
+[![asciicast](https://asciinema.org/a/8PcHP7PvkHDGgAUY.svg)](https://asciinema.org/a/8PcHP7PvkHDGgAUY)
