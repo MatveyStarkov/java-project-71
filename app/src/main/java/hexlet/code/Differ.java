@@ -1,12 +1,13 @@
 package hexlet.code;
 
-import hexlet.code.formatter.Stylish;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+
+
 
 public class Differ {
 
@@ -23,7 +24,7 @@ public class Differ {
 
         List<Map<String, Object>> x = FileComparator.compare(parsedData1, parsedData2);
 
-        return format(x, format);
+        return Formatter.getFormat(x, format);
 
     }
 
@@ -49,12 +50,7 @@ public class Differ {
         }
     }
 
-    private static String format(List<Map<String, Object>> diff, String formatName) {
-        return switch (formatName) {
-            case "stylish" -> Stylish.format(diff);
-            default -> throw new IllegalArgumentException("Unsupported output format: " + formatName);
-        };
-    }
+
 
 
 }
