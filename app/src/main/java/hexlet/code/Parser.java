@@ -11,10 +11,6 @@ public class Parser {
 
     public static Map<String, Object> parse(String content, String dataFormat) throws IOException {
 
-//        ObjectMapper mapper = new ObjectMapper();
-//        Map<String, Object> parsedData = mapper.readValue(content, Map.class);
-//        return parsedData;
-
         switch (dataFormat) {
             case "json" -> {
                 ObjectMapper objectMapper = new ObjectMapper();

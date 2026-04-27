@@ -1,12 +1,13 @@
 package hexlet.code;
 
-import java.util.ArrayList;
-import java.util.Map;
-import java.util.List;
-import java.util.TreeSet;
-import java.util.Set;
-import java.util.HashMap;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
+import java.util.HashMap;
+import java.util.Objects;
 
 
 public class FileComparator {
@@ -36,7 +37,7 @@ public class FileComparator {
                 diff.put("status", "added");
                 diff.put("value1", value2);
                 result.add(diff);
-            } else if ((file1.containsKey(key) && file2.containsKey(key) && !value1.equals(value2))) {
+            } else if ((file1.containsKey(key) && file2.containsKey(key) && !Objects.equals(value1, value2))) {
                 diff.put("status", "changed");
                 diff.put("value1", value1);
                 diff.put("value2", value2);

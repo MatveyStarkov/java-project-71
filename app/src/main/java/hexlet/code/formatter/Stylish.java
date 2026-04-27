@@ -1,10 +1,10 @@
-package hexlet.code;
+package hexlet.code.formatter;
 
 import java.util.List;
 import java.util.Map;
 
-public class Difference {
-    public static String differenceSearch(List<Map<String, Object>> x) {
+public class Stylish {
+    public static String format(List<Map<String, Object>> x) {
         StringBuilder result = new StringBuilder("{\n");
         for (Map<String, Object> compareRes : x) {
             Object value1 = compareRes.get("value1");

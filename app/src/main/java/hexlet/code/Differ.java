@@ -1,5 +1,7 @@
 package hexlet.code;
 
+import hexlet.code.formatter.Stylish;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -21,7 +23,7 @@ public class Differ {
 
         List<Map<String, Object>> x = FileComparator.compare(parsedData1, parsedData2);
 
-        return Difference.differenceSearch(x);
+        return format(x, format);
 
     }
 
@@ -32,8 +34,7 @@ public class Differ {
 
     public static String readFile(String path) throws IOException {
         Path normPath = Path.of(path).toAbsolutePath().normalize();
-        String whatInside = Files.readString(normPath);
-        return whatInside;
+        return Files.readString(normPath);
     }
 
     public static String getFormat(String path) {
@@ -46,6 +47,13 @@ public class Differ {
         } else {
             throw new RuntimeException("File '" + path + "' is in an unknown format");
         }
+    }
+
+    private static String format(List<Map<String, Object>> diff, String formatName) {
+        return switch (formatName) {
+            case "stylish" -> Stylish.format(diff);
+            default -> throw new IllegalArgumentException("Unsupported output format: " + formatName);
+        };
     }
 
 
