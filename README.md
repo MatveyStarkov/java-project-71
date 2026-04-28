@@ -28,6 +28,13 @@ Supported formats:
 [![asciicast](https://asciinema.org/a/8PcHP7PvkHDGgAUY.svg)](https://asciinema.org/a/8PcHP7PvkHDGgAUY)
 
 
-#### Plain:
+#### PlainFormat:
+
 
 [![asciicast](https://asciinema.org/a/gN4xa43MM9UW0pGi.svg)](https://asciinema.org/a/gN4xa43MM9UW0pGi)
+
+
+#### JsonFormat:
+
+
+[![asciicast](https://asciinema.org/a/ywR7zX1kpry79Jln.svg)](https://asciinema.org/a/ywR7zX1kpry79Jln)

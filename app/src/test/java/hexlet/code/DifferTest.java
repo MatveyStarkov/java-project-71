@@ -1,9 +1,13 @@
 package hexlet.code;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Map;
+import java.util.List;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -119,6 +123,28 @@ public class DifferTest {
                 Property 'setting3' was updated. From true to 'none'""";
 
         assertEquals(expected, res);
+    }
+
+    @Test
+    void testGenerateJsonFormat() throws IOException {
+        String file1 = getPath("file1.json");
+        String file2 = getPath("file2.json");
+
+        String actual = Differ.generate(file1, file2, "json");
+
+        String content1 = Differ.readFile(file1);
+        String content2 = Differ.readFile(file2);
+
+        Map<String, Object> parsedData1 = Parser.parse(content1, "json");
+        Map<String, Object> parsedData2 = Parser.parse(content2, "json");
+
+        List<Map<String, Object>> expected = FileComparator.compare(parsedData1, parsedData2);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Map<String, Object>> actualParsed = mapper.readValue(actual, new TypeReference<>() {
+        });
+
+        assertEquals(expected, actualParsed);
     }
 
 }

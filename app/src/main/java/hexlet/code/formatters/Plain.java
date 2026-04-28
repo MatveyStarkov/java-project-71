@@ -1,12 +1,13 @@
 package hexlet.code.formatters;
 
+import java.io.IOException;
 import java.util.Map;
 import java.util.List;
 
 public class Plain {
-    public static String format(List<Map<String, Object>> differenceList) {
+    public static String format(List<Map<String, Object>> x) throws IOException {
         StringBuilder result = new StringBuilder();
-        for (var map : differenceList) {
+        for (var map : x) {
             Object value1 = map.get("value1");
             Object value2 = map.get("value2");
             Object key = map.get("key");
