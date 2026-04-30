@@ -33,7 +33,11 @@ public class Plain {
                         .append(key).append("'")
                         .append(" was removed")
                         .append("\n");
+                case "unchanged" -> {
+
+                }
                 default -> {
+                    throw new RuntimeException("Error value");
                 }
             }
         }

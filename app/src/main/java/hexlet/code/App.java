@@ -13,7 +13,7 @@ import java.io.IOException;
         mixinStandardHelpOptions = true,
         version = "app 0.1.0")
 
-public class App implements Runnable {
+public final class App implements Runnable {
 
     @Parameters(
             index = "0",
@@ -41,10 +41,6 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-//            System.out.println("file1: " + filePath1);
-//            System.out.println("file2: " + filePath2);
-//            System.out.println(("format: " + format));
-
             System.out.println(Differ.generate(filePath1, filePath2, format));
         } catch (IOException e) {
             System.out.println("error: " + e.getMessage());

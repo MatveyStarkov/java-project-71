@@ -38,12 +38,15 @@ public class Stylish {
                             .append(value1)
                             .append("\n");
                 }
-                default -> {
+                case "unchanged" -> {
                     result.append("    ")
                             .append(key)
                             .append(": ")
                             .append(value1)
                             .append("\n");
+                }
+                default -> {
+                    throw new RuntimeException("Error value");
                 }
             }
         }

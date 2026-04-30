@@ -23,7 +23,7 @@ public class DifferTest {
     }
 
     @Test
-    void testGenerateJSON() throws IOException {
+    void testGenerateDefaultJSON() throws IOException {
 
         String file1 = getPath("file1.json");
         String file2 = getPath("file2.json");
@@ -63,7 +63,7 @@ public class DifferTest {
     }
 
     @Test
-    void testGenerateYAML() throws IOException {
+    void testGenerateDefaultYAML() throws IOException {
         String file1 = getPath("file1.yaml");
         String file2 = getPath("file2.yaml");
         String res = Differ.generate(file1, file2);
@@ -126,6 +126,24 @@ public class DifferTest {
     }
 
     @Test
+    void testGenerateYamlToPlainFormat() throws IOException {
+        String file1 = getPath("file1.yaml");
+        String file2 = getPath("file2.yaml");
+
+        String res = Differ.generate(file1, file2, "plain");
+
+        String expected = """
+        Property 'follow' was removed
+        Property 'proxy' was removed
+        Property 'timeout' was updated. From 50 to 20
+        Property 'verbose' was added with value: true""";
+
+        assertEquals(expected, res);
+    }
+
+
+
+    @Test
     void testGenerateJsonFormat() throws IOException {
         String file1 = getPath("file1.json");
         String file2 = getPath("file2.json");
@@ -137,6 +155,28 @@ public class DifferTest {
 
         Map<String, Object> parsedData1 = Parser.parse(content1, "json");
         Map<String, Object> parsedData2 = Parser.parse(content2, "json");
+
+        List<Map<String, Object>> expected = FileComparator.compare(parsedData1, parsedData2);
+
+        ObjectMapper mapper = new ObjectMapper();
+        List<Map<String, Object>> actualParsed = mapper.readValue(actual, new TypeReference<>() {
+        });
+
+        assertEquals(expected, actualParsed);
+    }
+
+    @Test
+    void testGenerateYamlToJsonFormat() throws IOException {
+        String file1 = getPath("file1.yaml");
+        String file2 = getPath("file2.yaml");
+
+        String actual = Differ.generate(file1, file2, "json");
+
+        String content1 = Differ.readFile(file1);
+        String content2 = Differ.readFile(file2);
+
+        Map<String, Object> parsedData1 = Parser.parse(content1, "yaml");
+        Map<String, Object> parsedData2 = Parser.parse(content2, "yaml");
 
         List<Map<String, Object>> expected = FileComparator.compare(parsedData1, parsedData2);
 

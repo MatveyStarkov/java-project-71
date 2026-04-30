@@ -38,17 +38,26 @@ public class Differ {
         return Files.readString(normPath);
     }
 
+
     public static String getFormat(String path) {
-        if (path.endsWith("json")) {
-            return "json";
-        } else if (path.endsWith("yaml")) {
-            return "yaml";
-        } else if (path.endsWith("yml")) {
-            return "yml";
-        } else {
-            throw new RuntimeException("File '" + path + "' is in an unknown format");
+        String file = Path.of(path).getFileName().toString();
+        int tochka = file.lastIndexOf('.');
+        if (tochka == -1 || tochka == file.length() - 1) {
+            throw new RuntimeException("File '" + path + "' has no extension");
         }
+        return file.substring(tochka + 1);
     }
+//    public static String getFormat(String path) {
+//        if (path.endsWith("json")) {
+//            return "json";
+//        } else if (path.endsWith("yaml")) {
+//            return "yaml";
+//        } else if (path.endsWith("yml")) {
+//            return "yml";
+//        } else {
+//            throw new RuntimeException("File '" + path + "' is in an unknown format");
+//        }
+//    }
 
 
 
