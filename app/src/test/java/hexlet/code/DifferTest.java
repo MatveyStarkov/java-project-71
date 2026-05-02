@@ -1,18 +1,39 @@
 package hexlet.code;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Map;
-import java.util.List;
+import java.nio.file.Paths;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class DifferTest {
+
+    private static String resultJson;
+    private static String resultPlain;
+    private static String resultStylish;
+
+    private static Path getFixturePath(String fileName) {
+        return Paths.get("src", "test", "resources", "fixtures", fileName)
+                .toAbsolutePath().normalize();
+    }
+
+    private static String readFixture(String fileName) throws Exception {
+        Path filePath = getFixturePath(fileName);
+        return Files.readString(filePath).trim();
+    }
+
+
+    @BeforeAll
+    public static void beforeAll() throws Exception {
+        resultJson = readFixture("result_json.json");
+        resultPlain = readFixture("result_plain.txt");
+        resultStylish = readFixture("result_stylish.txt");
+    }
 
     public static String getPath(String fileName) {
 
@@ -25,39 +46,12 @@ public class DifferTest {
     @Test
     void testGenerateDefaultJSON() throws IOException {
 
-        String file1 = getPath("file1.json");
-        String file2 = getPath("file2.json");
+        String file1 = getPath("file3.json");
+        String file2 = getPath("file4.json");
 
         String res = Differ.generate(file1, file2);
 
-        String expected = """
-                {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
-                }""";
-
-        assertEquals(expected, res);
-    }
-
-    @Test
-    void testGenerateEmptyJSON() throws IOException {
-
-        String file1 = getPath("file1.json");
-        String file2 = getPath("empty.json");
-
-        String res = Differ.generate(file1, file2);
-
-        String expected = """
-                {
-                  - follow: false
-                  - host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                }""";
+        String expected = resultStylish;
 
         assertEquals(expected, res);
     }
@@ -68,34 +62,18 @@ public class DifferTest {
         String file2 = getPath("file2.yaml");
         String res = Differ.generate(file1, file2);
 
-        String expected = """
-                {
-                  - follow: false
-                    host: hexlet.io
-                  - proxy: 123.234.53.22
-                  - timeout: 50
-                  + timeout: 20
-                  + verbose: true
-                }""";
+        String expected = resultStylish;
         assertEquals(expected, res);
     }
 
     @Test
     void testGenerateStylishFormat() throws IOException {
-        String file1 = getPath("file1.json");
-        String file2 = getPath("file2.json");
+        String file1 = getPath("file3.json");
+        String file2 = getPath("file4.json");
 
         String res = Differ.generate(file1, file2, "stylish");
 
-        String expected = """
-            {
-              - follow: false
-                host: hexlet.io
-              - proxy: 123.234.53.22
-              - timeout: 50
-              + timeout: 20
-              + verbose: true
-            }""";
+        String expected = resultStylish;
 
         assertEquals(expected, res);
     }
@@ -107,20 +85,7 @@ public class DifferTest {
 
         String res = Differ.generate(file1, file2, "plain");
 
-        String expected = """
-                Property 'chars2' was updated. From [complex value] to false
-                Property 'checked' was updated. From false to true
-                Property 'default' was updated. From null to [complex value]
-                Property 'id' was updated. From 45 to null
-                Property 'key1' was removed
-                Property 'key2' was added with value: 'value2'
-                Property 'numbers2' was updated. From [complex value] to [complex value]
-                Property 'numbers3' was removed
-                Property 'numbers4' was added with value: [complex value]
-                Property 'obj1' was added with value: [complex value]
-                Property 'setting1' was updated. From 'Some value' to 'Another value'
-                Property 'setting2' was updated. From 200 to 300
-                Property 'setting3' was updated. From true to 'none'""";
+        String expected = resultPlain;
 
         assertEquals(expected, res);
     }
@@ -132,11 +97,19 @@ public class DifferTest {
 
         String res = Differ.generate(file1, file2, "plain");
 
-        String expected = """
-        Property 'follow' was removed
-        Property 'proxy' was removed
-        Property 'timeout' was updated. From 50 to 20
-        Property 'verbose' was added with value: true""";
+        String expected = resultPlain;
+
+        assertEquals(expected, res);
+    }
+
+    @Test
+    void testGenerateYamlToStylishFormat() throws IOException {
+        String file1 = getPath("file1.yaml");
+        String file2 = getPath("file2.yaml");
+
+        String res = Differ.generate(file1, file2, "stylish");
+
+        String expected = resultStylish;
 
         assertEquals(expected, res);
     }
@@ -145,24 +118,13 @@ public class DifferTest {
 
     @Test
     void testGenerateJsonFormat() throws IOException {
-        String file1 = getPath("file1.json");
-        String file2 = getPath("file2.json");
+        String file1 = getPath("file3.json");
+        String file2 = getPath("file4.json");
 
         String actual = Differ.generate(file1, file2, "json");
+        String expected = resultJson;
 
-        String content1 = Differ.readFile(file1);
-        String content2 = Differ.readFile(file2);
-
-        Map<String, Object> parsedData1 = Parser.parse(content1, "json");
-        Map<String, Object> parsedData2 = Parser.parse(content2, "json");
-
-        List<Map<String, Object>> expected = FileComparator.compare(parsedData1, parsedData2);
-
-        ObjectMapper mapper = new ObjectMapper();
-        List<Map<String, Object>> actualParsed = mapper.readValue(actual, new TypeReference<>() {
-        });
-
-        assertEquals(expected, actualParsed);
+        assertEquals(expected, actual);
     }
 
     @Test
@@ -171,20 +133,9 @@ public class DifferTest {
         String file2 = getPath("file2.yaml");
 
         String actual = Differ.generate(file1, file2, "json");
+        String expected = resultJson;
 
-        String content1 = Differ.readFile(file1);
-        String content2 = Differ.readFile(file2);
-
-        Map<String, Object> parsedData1 = Parser.parse(content1, "yaml");
-        Map<String, Object> parsedData2 = Parser.parse(content2, "yaml");
-
-        List<Map<String, Object>> expected = FileComparator.compare(parsedData1, parsedData2);
-
-        ObjectMapper mapper = new ObjectMapper();
-        List<Map<String, Object>> actualParsed = mapper.readValue(actual, new TypeReference<>() {
-        });
-
-        assertEquals(expected, actualParsed);
+        assertEquals(expected, actual);
     }
 
 }

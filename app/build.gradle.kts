@@ -3,6 +3,7 @@ plugins {
     id("org.sonarqube") version "7.2.3.7755"
     application
     checkstyle
+    jacoco
 }
 
 group = "hexlet.code"
@@ -34,4 +35,16 @@ sonar {
 
 tasks.test {
     useJUnitPlatform()
+}
+
+tasks.jacocoTestReport {
+    dependsOn(tasks.test)
+    reports {
+        xml.required.set(true)
+    }
+}
+
+tasks.test {
+    useJUnitPlatform()
+    finalizedBy(tasks.jacocoTestReport)
 }
