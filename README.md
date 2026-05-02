@@ -7,12 +7,19 @@
 
 ### Difference Calculator between two files
 ---
-Supported formats:
+## Supported formats:
 
--yaml
+- yaml
 
--json
+- json
 
+---
+
+## Result formats
+
+- stylish (default)
+- plain
+- json
 
 
 ### Demo:
